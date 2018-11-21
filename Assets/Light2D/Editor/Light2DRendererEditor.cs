@@ -8,6 +8,7 @@ public class Light2DRendererEditor : Editor
 
     private float sdfBorder;
     private int samples;
+    private Color ambientColor;
     private float maxBrightness;
     private bool raycast;
 
@@ -19,6 +20,7 @@ public class Light2DRendererEditor : Editor
 
         sdfBorder = renderer.sdfBorder;
         samples = renderer.samples;
+        ambientColor = renderer.ambientColor;
         maxBrightness = renderer.maxBrightness;
         raycast = renderer.raycast;
 
@@ -40,6 +42,14 @@ public class Light2DRendererEditor : Editor
         if (EditorGUI.EndChangeCheck())
         {
             renderer.samples = samples;
+            UnityEditorInternal.InternalEditorUtility.RepaintAllViews();
+        }
+
+        EditorGUI.BeginChangeCheck();
+        ambientColor = EditorGUILayout.ColorField("Ambient Light", ambientColor);
+        if (EditorGUI.EndChangeCheck())
+        {
+            renderer.ambientColor = ambientColor;
             UnityEditorInternal.InternalEditorUtility.RepaintAllViews();
         }
 

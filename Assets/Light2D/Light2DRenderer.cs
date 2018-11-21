@@ -12,6 +12,8 @@ public class Light2DRenderer : MonoBehaviour
     public int samples = 128;
     public float maxBrightness = 1;
 
+    public Color ambientColor;
+
     private Shader jfShader;
     private Shader sdfShader;
 
@@ -25,8 +27,8 @@ public class Light2DRenderer : MonoBehaviour
     private void InitTextures()
     {
         colorTexture = new RenderTexture(Screen.width, Screen.height, 0);
-        jfTextureA = new RenderTexture(Screen.width / 2, Screen.height / 2, 0);
-        jfTextureB = new RenderTexture(Screen.width / 2, Screen.height / 2, 0);
+        jfTextureA = new RenderTexture(Screen.width, Screen.height, 0);
+        jfTextureB = new RenderTexture(Screen.width, Screen.height, 0);
         colorTexture.filterMode = FilterMode.Point;
         jfTextureA.filterMode = FilterMode.Point;
         jfTextureB.filterMode = FilterMode.Point;
@@ -75,7 +77,7 @@ public class Light2DRenderer : MonoBehaviour
         rayMaterial.SetInt("samples", samples);
         rayMaterial.SetFloat("sdfBorder", sdfBorder);
         rayMaterial.SetFloat("maxBrightness", maxBrightness);
-        rayMaterial.SetColor("ambient", Color.black);
+        rayMaterial.SetColor("ambient", ambientColor);
 
 #if UNITY_EDITOR
         if (!raycast)

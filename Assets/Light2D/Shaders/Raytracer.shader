@@ -79,9 +79,8 @@ Shader "Hidden/Raytracer"
 				for (int i = 0; i < MAX_ITER; i++)
 				{
 					sampleDF(p, c, d);
-					float2 border = 1. / _ScreenParams.xy;
+					if (d > MAX_DIST || p.x < 0 || p.y < 0 || p.x > 1 || p.y > 1) break;
 					if (d < EPSILON) return;
-					if (d > MAX_DIST || p.x < 0. || p.y < 0. || p.x> 1. || p.y > 1.) break;
 					p += dir * d / float2(_ScreenParams.x / _ScreenParams.y, 1);
 				}
 				c = ambient.rgb * ambient.a;
