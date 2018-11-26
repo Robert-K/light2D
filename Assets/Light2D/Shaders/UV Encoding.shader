@@ -1,13 +1,13 @@
-Shader "Light2D/Light2D Object"
+Shader "Hidden/UV Encoding"
 {
 	Properties
 	{
-		_Color("Color", Color) = (1,1,1,1)
+		_MainTex("Texture", 2D) = "black" {}
 	}
-	SubShader
+		SubShader
 	{
-		Tags { "RenderType" = "Opaque" }
-		LOD 100
+		// No culling or depth
+		Cull Off ZWrite Off ZTest Always
 
 		Pass
 		{
@@ -37,13 +37,17 @@ Shader "Light2D/Light2D Object"
 				return o;
 			}
 
-			float4 _Color;
+			sampler2D _MainTex;
+
+			float2 stepSize;
 
 			float4 frag(v2f i) : SV_Target
 			{
-				return _Color;
+				float alpha = tex2D(_MainTex, i.uv).a;
+				return float4(i.uv, 1, alpha) * (1. - step(alpha, 0));
 			}
 			ENDCG
 		}
+
 	}
 }

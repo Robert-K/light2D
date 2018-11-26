@@ -6,9 +6,9 @@ Material:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Light2D Object Material
+  m_Name: Light2D Object
   m_Shader: {fileID: 4800000, guid: a7bb0886949e3574b98f11ccab77f095, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 17
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -24,4 +24,4 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats: []
     m_Colors:
-    - _Color: {r: 1, g: 0.3158298, b: 0, a: 0.91764706}
+    - _Color: {r: 1, g: 1, b: 1, a: 0.91764706}

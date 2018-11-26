@@ -1,4 +1,4 @@
-Shader "Hidden/Raytracer"
+Shader "Hidden/DebugRaytracer"
 {
 	Properties
 	{
@@ -40,7 +40,7 @@ Shader "Hidden/Raytracer"
 			sampler2D _MainTex;
 			sampler2D _ColorTex;
 
-			int samples;
+			float samples;
 			float sdfBorder;
 			float maxBrightness;
 			float4 ambient;
@@ -51,13 +51,13 @@ Shader "Hidden/Raytracer"
 
 			float random(float2 co)
 			{
-				return frac(sin(dot(co, float2(12.9898, 78.233))) * 43758.5453123);
+				return frac(sin(dot(co, float2(12.93567367898, 78.23092373))) * 43758.545313623);
 			}
 
 			void sampleDF(in float2 p, out float3 color, out float dist)
 			{
 				float4 colorTex = tex2D(_ColorTex, p).rgba;
-				if (colorTex.a == 1)
+				if (colorTex.a > 0)
 				{
 					dist = 0;
 				}
@@ -73,17 +73,19 @@ Shader "Hidden/Raytracer"
 				}
 			}
 
-			void trace(float2 p, float2 dir, out float3 c)
+			int trace(float2 p, float2 dir, out float3 c, int iter)
 			{
 				float d;
 				for (int i = 0; i < MAX_ITER; i++)
 				{
 					sampleDF(p, c, d);
 					if (d > MAX_DIST || p.x < 0 || p.y < 0 || p.x > 1 || p.y > 1) break;
-					if (d < EPSILON) return;
+					if (d < EPSILON) return iter;
 					p += dir * d / float2(_ScreenParams.x / _ScreenParams.y, 1);
+					iter++;
 				}
 				c = ambient.rgb * ambient.a;
+				return iter;
 			}
 
 			float4 frag(v2f i) : SV_Target
@@ -91,16 +93,18 @@ Shader "Hidden/Raytracer"
 				float2 p = i.uv * (1. - sdfBorder) + sdfBorder / 2.;
 
 				float3 col = ambient;
+				int iter = 0;
 				for (float f = 0.; f < samples; f++)
 				{
 					float3 c;
 					float t = (f + random(i.uv + f + frac(_Time.y))) / samples * 2. * 3.1415;
-					trace(p, float2(cos(t), sin(t)), c);
+					iter += trace(p, float2(cos(t), sin(t)), c, iter);
 					col += c;
 				}
 				col /= samples;
+				float avgIter = float(iter) / (samples * float(MAX_ITER));
 
-				return float4(col, 1);
+				return float4((col.r + col.g + col.b) / 3. + float3(avgIter, 0, 0), 1);
 			}
 			ENDCG
 		}

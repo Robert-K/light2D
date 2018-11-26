@@ -14,9 +14,11 @@ public class Light2DRenderer : MonoBehaviour
 
     public Color ambientColor;
 
+    private Shader uvShader;
     private Shader jfShader;
     private Shader sdfShader;
 
+    private Material uvMaterial;
     private Material jfMaterial;
     private Material rayMaterial;
 
@@ -36,9 +38,11 @@ public class Light2DRenderer : MonoBehaviour
 
     private void Start()
     {
+        uvShader = Shader.Find("Hidden/UV Encoding");
         jfShader = Shader.Find("Hidden/Jump Flood");
         sdfShader = Shader.Find("Hidden/Raytracer");
 
+        uvMaterial = new Material(uvShader);
         jfMaterial = new Material(jfShader);
         rayMaterial = new Material(sdfShader);
 
@@ -59,7 +63,7 @@ public class Light2DRenderer : MonoBehaviour
 
         Graphics.Blit(source, colorTexture);
         jfMaterial.SetVector("stepSize", stepSize);
-        Graphics.Blit(colorTexture, jfTextureA, jfMaterial);
+        Graphics.Blit(colorTexture, jfTextureA, uvMaterial);
 
         for (int i = 0; i < iterations; i++)
         {
@@ -74,7 +78,7 @@ public class Light2DRenderer : MonoBehaviour
         }
 
         rayMaterial.SetTexture("_ColorTex", colorTexture);
-        rayMaterial.SetInt("samples", samples);
+        rayMaterial.SetFloat("samples", samples);
         rayMaterial.SetFloat("sdfBorder", sdfBorder);
         rayMaterial.SetFloat("maxBrightness", maxBrightness);
         rayMaterial.SetColor("ambient", ambientColor);
