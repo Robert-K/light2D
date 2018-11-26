@@ -625,6 +625,7 @@ GameObject:
   - component: {fileID: 1471320115}
   - component: {fileID: 1471320114}
   - component: {fileID: 1471320113}
+  - component: {fileID: 1471320117}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -645,7 +646,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   raycast: 1
   sdfBorder: 0
-  samples: 128
+  samples: 512
   maxBrightness: 1.6
   ambientColor: {r: 0.0144742355, g: 0, b: 0.11320752, a: 1}
 --- !u!81 &1471320114
@@ -708,3 +709,14 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1471320117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1471320112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4904e21070b2b6349a7364a214ac8bd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
