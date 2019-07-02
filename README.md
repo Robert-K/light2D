@@ -11,7 +11,7 @@ Realtime 2D Raytracing in [Unity](https://unity3d.com/) using Signed Distance Fi
 - Individual objects/layers can be in- or excluded
 - Easy to set up & includes examples
 
-### WIP! Documentation coming soon...
+### WIP! Documentation coming soon... (maybe)
 
 ## ToDo
 - Allow blending RenderTextures and Light2D output
